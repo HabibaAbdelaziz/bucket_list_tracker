@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Database
+test.db
+
+# Virtual Environment
+.venv/
+
+# VSCode settings
+.vscode/
+
+# Environment Variables (if you have any later)
+.env
