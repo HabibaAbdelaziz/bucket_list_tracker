@@ -1,8 +1,10 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from typing import Annotated
 
 # Database Configs
 SQL_DB_URL = "sqlite:///./test.db" # telling my app where the db is.
@@ -33,6 +35,16 @@ class Item(Base):
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+
+## First step in setting up Authentication
+@app.get("/items/")
+async def see_item(token: Annotated[str, Depends(oauth2_scheme)]):
+    return {"token": token}
+
 
 #########################
 # CRUD operations
